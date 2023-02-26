@@ -52,4 +52,4 @@ void FMetaSoundToolModule::ShutdownModule()
 
 #undef LOCTEXT_NAMESPACE
 	
-IMPLEMENT_MODULE(FMetaSoundToolModule, MetaSoundTool)
+IMPLEMENT_MODULE(FMetaSoundToolModule, MetaSoundTool);
