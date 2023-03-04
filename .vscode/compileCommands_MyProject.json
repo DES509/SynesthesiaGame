@@ -1,67 +1,82 @@
 [
 	{
+		"file": "C:\\UE5 Project\\SynesthesiaGame\\Plugins\\MetaSoundTool\\Source\\MetaSoundTool\\MetaSoundTool.Build.cs",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MetaSoundTool.49.rsp\"",
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\UE5 Project\\SynesthesiaGame\\Plugins\\MetaSoundTool\\Source\\MetaSoundTool\\Private\\MetaSoundTool.cpp",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MetaSoundTool.49.rsp\"",
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
+	},
+	{
+		"file": "C:\\UE5 Project\\SynesthesiaGame\\Plugins\\MetaSoundTool\\Source\\MetaSoundTool\\Public\\MetaSoundTool.h",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MetaSoundTool.49.rsp\"",
+		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
+	},
+	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\MyProject.Build.cs",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	},
 	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\MyProject.cpp",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	},
 	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\MyProject.h",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	},
 	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\MyProjectCharacter.cpp",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	},
 	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\MyProjectCharacter.h",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	},
 	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\MyProjectGameMode.cpp",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	},
 	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\MyProjectGameMode.h",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	},
 	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\MyProjectProjectile.cpp",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	},
 	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\MyProjectProjectile.h",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	},
 	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\TP_PickUpComponent.cpp",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	},
 	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\TP_PickUpComponent.h",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	},
 	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\TP_WeaponComponent.cpp",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	},
 	{
 		"file": "C:\\UE5 Project\\SynesthesiaGame\\Source\\MyProject\\TP_WeaponComponent.h",
-		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.211.rsp\"",
+		"command": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX64\\x64\\cl.exe\" @\"C:\\UE5 Project\\SynesthesiaGame\\.vscode\\compileCommands_MyProject\\MyProject.220.rsp\"",
 		"directory": "C:\\Program Files\\Epic Games\\UE_5.0\\Engine\\Source"
 	}
 ]

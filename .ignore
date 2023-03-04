@@ -1,5 +1,8 @@
 .git
 .vscode
 Content
+DerivedDataCache
 Intermediate
 Saved
+Plugins/MetaSoundTool/Content
+Plugins/MetaSoundTool/Intermediate
