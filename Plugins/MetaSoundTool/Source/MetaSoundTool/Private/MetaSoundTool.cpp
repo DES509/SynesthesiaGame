@@ -26,9 +26,9 @@ void FMetaSoundToolModule::StartupModule()
 	LibraryPath = FPaths::Combine(*BaseDir, TEXT("Binaries/ThirdParty/MetaSoundToolLibrary/Linux/x86_64-unknown-linux-gnu/libExampleLibrary.so"));
 #endif // PLATFORM_WINDOWS
 
-	ExampleLibraryHandle = !LibraryPath.IsEmpty() ? FPlatformProcess::GetDllHandle(*LibraryPath) : nullptr;
+	MetaSoundToolLibraryHandle = !LibraryPath.IsEmpty() ? FPlatformProcess::GetDllHandle(*LibraryPath) : nullptr;
 
-	if (ExampleLibraryHandle)
+	if (MetaSoundToolLibraryHandle)
 	{
 		// Call the test function in the third party library that opens a message box
 		ExampleLibraryFunction();
@@ -46,8 +46,8 @@ void FMetaSoundToolModule::ShutdownModule()
 	// we call this function before unloading the module.
 
 	// Free the dll handle
-	// FPlatformProcess::FreeDllHandle(ExampleLibraryHandle);
-	// ExampleLibraryHandle = nullptr;
+	FPlatformProcess::FreeDllHandle(MetaSoundToolLibraryHandle);
+	MetaSoundToolLibraryHandle = nullptr;
 }
 
 #undef LOCTEXT_NAMESPACE

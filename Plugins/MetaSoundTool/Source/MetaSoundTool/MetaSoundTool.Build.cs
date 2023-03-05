@@ -11,6 +11,7 @@ public class MetaSoundTool : ModuleRules
 		PublicIncludePaths.AddRange(
 			new string[] {
 				// ... add public include paths required here ...
+				"MetaSoundTool/Public"
 			}
 			);
 				
@@ -18,6 +19,7 @@ public class MetaSoundTool : ModuleRules
 		PrivateIncludePaths.AddRange(
 			new string[] {
 				// ... add other private include paths required here ...
+				"MetaSoundTool/Private"
 			}
 			);
 			
@@ -37,6 +39,9 @@ public class MetaSoundTool : ModuleRules
 		
 		PrivateDependencyModuleNames.AddRange(new string[]
 		{
+			"InputCore",
+			"Engine",
+			"UMG", "Slate", "SlateCore",
 			"MetasoundEngine",
 			"MetasoundFrontend",
 			"MetasoundGraphCore",
