@@ -6,7 +6,9 @@
 #include "MetasoundParamHelper.h"            // METASOUND_PARAM and METASOUND_GET_PARAM family of macros
 #include "MetasoundWave.h"
 #include "UObject/UObjectBase.h"
+#include "Editor/EditorEngine.h"
 #include "CoreMinimal.h"
+#include "Engine/World.h"
 #include "Engine/Engine.h"
 #include "MetasoundAssetBase.h"
 #include "Kismet/GameplayStatics.h"
@@ -127,13 +129,20 @@ namespace Metasound
 			void Execute()
 			{
 				*SendToReceiverOutput = 1;
-                if(UWorld* World = GEngine->GetWorld())
-                {
-                    AActor* Actor = UGameplayStatics::GetActorOfClass(World, AMTReceicer::StaticClass());
-                    AMTReceicer* TargetReceiver = Cast<AMTReceicer>(Actor);
-                    if(TargetReceiver != nullptr)
-                        TargetReceiver->GetVariable();
-                }
+				if(flag == false)
+				{
+					flag = true;
+					UWorld* World = GEditor->EditorWorld;
+					if(World!=nullptr)
+					{
+						AActor* Actor = UGameplayStatics::GetActorOfClass(World, AMTReceiver::StaticClass());
+						AMTReceiver* TargetReceiver = Cast<AMTReceiver>(Actor);
+						if(TargetReceiver != nullptr)
+						{
+							TargetReceiver->GetCool();
+						}
+					}
+				}
 			}
 
 	private:
@@ -143,6 +152,8 @@ namespace Metasound
 
 		// Outputs
 		FFloatWriteRef SendToReceiverOutput;
+
+		bool flag = false;
 	};
 
 	// Node Class - Inheriting from FNodeFacade is recommended for nodes that have a static FVertexInterface

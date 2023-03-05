@@ -1,16 +1,16 @@
 #include "MetaSoundVariableReceiver.h"
 
-AMTReceicer::AMTReceicer()
+AMTReceiver::AMTReceiver()
 {
 
 }
 
-void GetVariable()
+void AMTReceiver::GetCool()
 {
     UE_LOG(LogTemp, Warning, TEXT("Cool"));
 }
 
-void AMTReceicer::BeginPlay()
+void AMTReceiver::BeginPlay()
 {
     Super::BeginPlay();    
 }

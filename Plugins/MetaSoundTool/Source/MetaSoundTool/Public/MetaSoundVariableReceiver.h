@@ -1,16 +1,17 @@
-#include "CoreMinimal.h"
+#include "Core.h"
 #include "GameFramework/Actor.h"
 #include "MetaSoundVariableReceiver.generated.h"
 
 UCLASS()
-class METASOUNDTOOL_API AMTReceicer: public AActor
+class METASOUNDTOOL_API AMTReceiver: public AActor
 {
     GENERATED_BODY()
 
-    public:
-    AMTReceicer();
-    void GetVariable();
+public:
+    AMTReceiver();
+    void GetCool();
+    int cool = 10;
 
-    protected:
+protected:
 	virtual void BeginPlay();
 };

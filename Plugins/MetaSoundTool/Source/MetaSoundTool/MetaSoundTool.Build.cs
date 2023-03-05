@@ -46,7 +46,8 @@ public class MetaSoundTool : ModuleRules
 			"MetasoundFrontend",
 			"MetasoundGraphCore",
 			"MetasoundStandardNodes",
-			"MetasoundEditor"
+			"MetasoundEditor",
+			"UnrealEd"
 		});
 		
 		
