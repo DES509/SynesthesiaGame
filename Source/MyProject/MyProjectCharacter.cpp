@@ -41,7 +41,6 @@ void AMyProjectCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
-
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
