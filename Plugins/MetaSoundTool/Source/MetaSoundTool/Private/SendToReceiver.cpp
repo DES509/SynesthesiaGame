@@ -6,7 +6,6 @@
 #include "MetasoundParamHelper.h"            // METASOUND_PARAM and METASOUND_GET_PARAM family of macros
 #include "MetasoundWave.h"
 #include "UObject/UObjectBase.h"
-#include "Editor/EditorEngine.h"
 #include "CoreMinimal.h"
 #include "Engine/World.h"
 #include "Engine/Engine.h"
@@ -132,15 +131,16 @@ namespace Metasound
 				if(flag == false)
 				{
 					flag = true;
-					UWorld* World = GEditor->EditorWorld;
+					UWorld* World = GEngine->GetWorldContexts()[0].World();
 					if(World!=nullptr)
 					{
-						AActor* Actor = UGameplayStatics::GetActorOfClass(World, AMTReceiver::StaticClass());
-						AMTReceiver* TargetReceiver = Cast<AMTReceiver>(Actor);
-						if(TargetReceiver != nullptr)
-						{
-							TargetReceiver->GetCool();
-						}
+
+						// AActor* Actor = UGameplayStatics::GetActorOfClass(World, AMTReceiver::StaticClass());
+						// AMTReceiver* TargetReceiver = Cast<AMTReceiver>(Actor);
+						// if(TargetReceiver != nullptr)
+						// {
+						// 	TargetReceiver->GetCool();
+						// }
 					}
 				}
 			}
