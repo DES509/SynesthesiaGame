@@ -2,7 +2,7 @@
 #include "MetasoundPrimitives.h"             // ReadRef and WriteRef descriptions for bool, int32, float, and string
 #include "MetasoundNodeRegistrationMacro.h"  // METASOUND_LOCTEXT and METASOUND_REGISTER_NODE macros
 #include "MetasoundStandardNodesNames.h"     // StandardNodes namespace
-#include "MetasoundFacade.h"				         // FNodeFacade class, eliminates the need for a fair amount of boilerplate code
+#include "MetasoundFacade.h"				 // FNodeFacade class, eliminates the need for a fair amount of boilerplate code
 #include "MetasoundParamHelper.h"            // METASOUND_PARAM and METASOUND_GET_PARAM family of macros
 #include "MetasoundWave.h"
 #include "UObject/UObjectBase.h"
@@ -134,7 +134,8 @@ namespace Metasound
 					UWorld* World = GEngine->GetWorldContexts()[0].World();
 					if(World!=nullptr)
 					{
-
+						Passer* A = new Passer(12);
+						delete A;
 						// AActor* Actor = UGameplayStatics::GetActorOfClass(World, AMTReceiver::StaticClass());
 						// AMTReceiver* TargetReceiver = Cast<AMTReceiver>(Actor);
 						// if(TargetReceiver != nullptr)
