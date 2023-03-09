@@ -29,7 +29,7 @@ protected:
     virtual void Tick(float DeltaTime);
 
 private:
-    TSharedPtr<FMetaSoundVarPasser> Test = new FMetaSoundVarPasser();
+    //TSharedPtr<FMetaSoundVarPasser> Test = new FMetaSoundVarPasser();
 };
 
 class FMetaSoundVarPasser

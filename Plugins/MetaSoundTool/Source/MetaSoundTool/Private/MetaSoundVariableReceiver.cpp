@@ -22,14 +22,14 @@ void AMTReceiver::BeginPlay()
     AActor* Actor = UGameplayStatics::GetActorOfClass(GEngine->GetWorldContexts()[0].World(), AMTReceiver::StaticClass());
     AMTReceiver* TargetReceiver = Cast<AMTReceiver>(Actor);
     UE_LOG(LogTemp, Warning, TEXT("BeginPlay!"));
-    Test->Num = 10;
+    //Test->Num = 10;
 }
 
 void AMTReceiver::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
     // Create a shared reference to a new node 
-    LOG_WARNING("Tick %i", Test->Num);
+    //LOG_WARNING("Tick %i", Test->Num);
 }
 
 FMetaSoundVarPasser::FMetaSoundVarPasser()
