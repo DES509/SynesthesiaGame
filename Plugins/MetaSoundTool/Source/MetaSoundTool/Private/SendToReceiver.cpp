@@ -145,6 +145,7 @@ namespace Metasound
 							bIsGateOpen = false;
 							if(FMetaSoundVarPasser::TestObj!=nullptr)
 							{
+								FMetaSoundVarPasser::TestObj->SendInt.Broadcast(10);
 								UE_LOG(LogTemp, Warning, TEXT("Valid!! and cool is: %d"), FMetaSoundVarPasser::TestObj->cool);
 							}
 						}
