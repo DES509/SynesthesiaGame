@@ -26,7 +26,8 @@ namespace Metasound
 	namespace SendToReceiverNames
 	{
 		METASOUND_PARAM(InputTrigger, "Input Trigger", "Input Trigger.");
-		METASOUND_PARAM(OutputNumName, "Abs Number", "Abs Num.");
+		METASOUND_PARAM(InputReset, "Reset", "Reset.");
+		METASOUND_PARAM(OutputNumName, "Null", "Null.");
 	}
 
 
@@ -36,8 +37,9 @@ namespace Metasound
 		public:
 			// Constructor
 			FSendToReceiverOperator(
-				const FTriggerReadRef& InAValue)
-				: InputA(InAValue)
+				const FTriggerReadRef& InAValue,
+				const FTriggerReadRef& InBValue)
+				: InputTrigger(InAValue), InputReset(InBValue)
 				, SendToReceiverOutput(FFloatWriteRef::CreateNew())
 			{
 			}
@@ -49,7 +51,8 @@ namespace Metasound
 
 				static const FVertexInterface Interface(
 					FInputVertexInterface(
-						TInputDataVertexModel<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputTrigger))
+						TInputDataVertexModel<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputTrigger)),
+						TInputDataVertexModel<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputReset))
 					),
 					FOutputVertexInterface(
 						TOutputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(OutputNumName))
@@ -68,10 +71,10 @@ namespace Metasound
 
 					FNodeClassMetadata Metadata
 					{
-						FNodeClassName { StandardNodes::Namespace, "Send To Receiver", StandardNodes::AudioVariant }, 
+						FNodeClassName { StandardNodes::Namespace, "Send Trigger To Receiver", StandardNodes::AudioVariant }, 
 						1, // Major Version
 						0, // Minor Version
-						METASOUND_LOCTEXT("SendToReceiverDisplayName", "Send To Receiver"),
+						METASOUND_LOCTEXT("SendToReceiverDisplayName", "Send Trigger To Receiver"),
 						METASOUND_LOCTEXT("SendToReceiverDesc", "A simple node to demonstrate how to create new MetaSound nodes in C++. Adds two floats together"),
 						PluginAuthor,
 						PluginNodeMissingPrompt,
@@ -95,7 +98,8 @@ namespace Metasound
 
 				FDataReferenceCollection InputDataReferences;
 
-				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputTrigger), InputA);
+				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputTrigger), InputTrigger);
+				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputReset), InputReset);
 
 				return InputDataReferences;
 			}
@@ -120,42 +124,54 @@ namespace Metasound
 				const Metasound::FDataReferenceCollection& InputCollection = InParams.InputDataReferences;
 				const Metasound::FInputVertexInterface& InputInterface = DeclareVertexInterface().GetInputInterface();
 
-				TDataReadReference<FTrigger> InputA = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<FTrigger>(InputInterface, METASOUND_GET_PARAM_NAME(InputTrigger), InParams.OperatorSettings);
-				return MakeUnique<FSendToReceiverOperator>(InputA);
+				TDataReadReference<FTrigger> InputTrigger = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<FTrigger>(InputInterface, METASOUND_GET_PARAM_NAME(InputTrigger), InParams.OperatorSettings);
+				TDataReadReference<FTrigger> InputReset = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<FTrigger>(InputInterface, METASOUND_GET_PARAM_NAME(InputReset), InParams.OperatorSettings);
+				return MakeUnique<FSendToReceiverOperator>(InputTrigger, InputReset);
 			}
 
 			// Primary node functionality
 			void Execute()
 			{
 				*SendToReceiverOutput = 1;
-				if(flag == false)
-				{
-					flag = true;
-					UWorld* World = GEngine->GetWorldContexts()[0].World();
-					if(World!=nullptr)
+				
+				InputTrigger->ExecuteBlock(
+					[](int32, int32) 
 					{
-						TSharedPtr<FMetaSoundVarPasser> A = MakeShared<FMetaSoundVarPasser>();
-						A->Num = 20;
-						//UE_LOG(LogTemp, Warning, TEXT("Number in the world: %d"), A->Num);
-						// AActor* Actor = UGameplayStatics::GetActorOfClass(World, AMTReceiver::StaticClass());
-						// AMTReceiver* TargetReceiver = Cast<AMTReceiver>(Actor);
-						// if(TargetReceiver != nullptr)
-						// {
-						// 	TargetReceiver->GetCool();
-						// }
+					},
+					[this](int32 StartFrame, int32 EndFrame)
+					{
+						if (bIsGateOpen)
+						{
+							bIsGateOpen = false;
+							if(FMetaSoundVarPasser::TestObj!=nullptr)
+							{
+								UE_LOG(LogTemp, Warning, TEXT("Valid!! and cool is: %d"), FMetaSoundVarPasser::TestObj->cool);
+							}
+						}
 					}
-				}
+				);	
+
+				InputReset->ExecuteBlock(
+					[](int32, int32) 
+					{
+					},
+					[this](int32 StartFrame, int32 EndFrame)
+					{
+						bIsGateOpen = true;
+					}
+				);	
 			}
 
 	private:
 
 		// Inputs
-		FTriggerReadRef InputA;
+		FTriggerReadRef InputTrigger;
+		FTriggerReadRef InputReset;
 
 		// Outputs
 		FFloatWriteRef SendToReceiverOutput;
 
-		bool flag = false;
+		bool bIsGateOpen = true;
 	};
 
 	// Node Class - Inheriting from FNodeFacade is recommended for nodes that have a static FVertexInterface

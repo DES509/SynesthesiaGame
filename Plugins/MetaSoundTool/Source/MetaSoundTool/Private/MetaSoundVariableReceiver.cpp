@@ -4,6 +4,8 @@
 // custom log category
 DEFINE_LOG_CATEGORY(Sandbox);
 
+AMTReceiver* FMetaSoundVarPasser::TestObj;
+
 AMTReceiver::AMTReceiver()
 {
     PrimaryActorTick.bCanEverTick = true;
@@ -19,17 +21,21 @@ void AMTReceiver::GetCool()
 void AMTReceiver::BeginPlay()
 {
     Super::BeginPlay();    
-    AActor* Actor = UGameplayStatics::GetActorOfClass(GEngine->GetWorldContexts()[0].World(), AMTReceiver::StaticClass());
-    AMTReceiver* TargetReceiver = Cast<AMTReceiver>(Actor);
-    UE_LOG(LogTemp, Warning, TEXT("BeginPlay!"));
-    //Test->Num = 10;
+
+    Initialise();
+    cool = 0;
 }
 
 void AMTReceiver::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-    // Create a shared reference to a new node 
-    //LOG_WARNING("Tick %i", Test->Num);
+}
+
+void AMTReceiver::Initialise()
+{
+    UE_LOG(LogTemp, Warning, TEXT("BeginPlay!"));
+    TSharedRef<FMetaSoundVarPasser> InitialPasser = MakeShared<FMetaSoundVarPasser>();
+    InitialPasser->TestObj = this;
 }
 
 FMetaSoundVarPasser::FMetaSoundVarPasser()
@@ -37,12 +43,7 @@ FMetaSoundVarPasser::FMetaSoundVarPasser()
     UE_LOG(LogTemp, Warning, TEXT("Initialise"));
 }
 
-FMetaSoundVarPasser::FMetaSoundVarPasser(int NumVar)
-{
-    Num = NumVar;
-}
-
 FMetaSoundVarPasser::~FMetaSoundVarPasser()
 {
-    LOG_WARNING("Destroy %i", Num);
+    LOG_WARNING("Destroy");
 }

@@ -29,6 +29,9 @@ protected:
     virtual void Tick(float DeltaTime);
 
 private:
+    void Initialise();
+
+private:
     //TSharedPtr<FMetaSoundVarPasser> Test = new FMetaSoundVarPasser();
 };
 
@@ -36,7 +39,6 @@ class FMetaSoundVarPasser
 {
 public:
     FMetaSoundVarPasser();
-    FMetaSoundVarPasser(int NumVar);
     ~FMetaSoundVarPasser();
-    int Num = 0;
+    static AMTReceiver* TestObj;
 };
