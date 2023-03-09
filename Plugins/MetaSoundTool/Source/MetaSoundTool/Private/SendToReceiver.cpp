@@ -134,8 +134,9 @@ namespace Metasound
 					UWorld* World = GEngine->GetWorldContexts()[0].World();
 					if(World!=nullptr)
 					{
-						Passer* A = new Passer(12);
-						delete A;
+						TSharedPtr<FMetaSoundVarPasser> A = MakeShared<FMetaSoundVarPasser>();
+						A->Num = 20;
+						//UE_LOG(LogTemp, Warning, TEXT("Number in the world: %d"), A->Num);
 						// AActor* Actor = UGameplayStatics::GetActorOfClass(World, AMTReceiver::StaticClass());
 						// AMTReceiver* TargetReceiver = Cast<AMTReceiver>(Actor);
 						// if(TargetReceiver != nullptr)

@@ -23,15 +23,20 @@ public:
     void GetCool();
     int cool = 10;
 
+
 protected:
 	virtual void BeginPlay();
+    virtual void Tick(float DeltaTime);
+
+private:
+    TSharedPtr<FMetaSoundVarPasser> Test = new FMetaSoundVarPasser();
 };
 
-class Passer
+class FMetaSoundVarPasser
 {
 public:
-    Passer();
-    Passer(int NumVar);
-    ~Passer();
-    static int Num;
+    FMetaSoundVarPasser();
+    FMetaSoundVarPasser(int NumVar);
+    ~FMetaSoundVarPasser();
+    int Num = 0;
 };
