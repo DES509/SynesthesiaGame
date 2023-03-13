@@ -9,6 +9,7 @@
 #include "CoreMinimal.h"
 #include "Engine/World.h"
 #include "Engine/Engine.h"
+#include "MetaSoundToolBPFunctionLibrary.h"
 #include "MetasoundAssetBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Subsystems/EngineSubsystem.h"
@@ -27,6 +28,7 @@ namespace Metasound
 	{
 		METASOUND_PARAM(InputTrigger, "Input Trigger", "Input Trigger.");
 		METASOUND_PARAM(InputReset, "Reset", "Reset.");
+		METASOUND_PARAM(InputValue, "Float", "Float Variable.");
 		METASOUND_PARAM(OutputNumName, "Null", "Null.");
 	}
 
@@ -38,8 +40,9 @@ namespace Metasound
 			// Constructor
 			FSendToReceiverOperator(
 				const FTriggerReadRef& InAValue,
-				const FTriggerReadRef& InBValue)
-				: InputTrigger(InAValue), InputReset(InBValue)
+				const FTriggerReadRef& InBValue,
+				const FFloatReadRef& InCValue)
+				: InputTrigger(InAValue), InputReset(InBValue), InputValue(InCValue)
 				, SendToReceiverOutput(FFloatWriteRef::CreateNew())
 			{
 			}
@@ -52,7 +55,8 @@ namespace Metasound
 				static const FVertexInterface Interface(
 					FInputVertexInterface(
 						TInputDataVertexModel<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputTrigger)),
-						TInputDataVertexModel<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputReset))
+						TInputDataVertexModel<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputReset)),
+						TInputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputValue))
 					),
 					FOutputVertexInterface(
 						TOutputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(OutputNumName))
@@ -100,6 +104,7 @@ namespace Metasound
 
 				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputTrigger), InputTrigger);
 				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputReset), InputReset);
+				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputValue), InputValue);
 
 				return InputDataReferences;
 			}
@@ -126,7 +131,9 @@ namespace Metasound
 
 				TDataReadReference<FTrigger> InputTrigger = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<FTrigger>(InputInterface, METASOUND_GET_PARAM_NAME(InputTrigger), InParams.OperatorSettings);
 				TDataReadReference<FTrigger> InputReset = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<FTrigger>(InputInterface, METASOUND_GET_PARAM_NAME(InputReset), InParams.OperatorSettings);
-				return MakeUnique<FSendToReceiverOperator>(InputTrigger, InputReset);
+				TDataReadReference<float> InputValue = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<float>(InputInterface, METASOUND_GET_PARAM_NAME(InputValue), InParams.OperatorSettings);
+
+				return MakeUnique<FSendToReceiverOperator>(InputTrigger, InputReset, InputValue);
 			}
 
 			// Primary node functionality
@@ -143,10 +150,14 @@ namespace Metasound
 						if (bIsGateOpen)
 						{
 							bIsGateOpen = false;
-							if(FMetaSoundVarPasser::TestObj!=nullptr)
+							// if(UMetaSoundVarPasser::TestObj!=nullptr)
+							// {
+							// 	UMetaSoundVarPasser::TestObj->SendInt.Broadcast(*InputValue);
+							// 	UE_LOG(LogTemp, Warning, TEXT("Broadcast"));
+							// }
+							if(UMetaSoundToolBPFunctionLibrary::I != nullptr)
 							{
-								FMetaSoundVarPasser::TestObj->SendInt.Broadcast(10);
-								UE_LOG(LogTemp, Warning, TEXT("Valid!! and cool is: %d"), FMetaSoundVarPasser::TestObj->cool);
+								UMetaSoundToolBPFunctionLibrary::I->SendInt.Broadcast(*InputValue);
 							}
 						}
 					}
@@ -168,6 +179,7 @@ namespace Metasound
 		// Inputs
 		FTriggerReadRef InputTrigger;
 		FTriggerReadRef InputReset;
+		FFloatReadRef InputValue;
 
 		// Outputs
 		FFloatWriteRef SendToReceiverOutput;
