@@ -155,9 +155,9 @@ namespace Metasound
 							// 	UMetaSoundVarPasser::TestObj->SendInt.Broadcast(*InputValue);
 							// 	UE_LOG(LogTemp, Warning, TEXT("Broadcast"));
 							// }
-							if(UMetaSoundToolBPFunctionLibrary::I != nullptr)
+							if(UMetaSoundToolBPFunctionLibrary::Receiver != nullptr)
 							{
-								UMetaSoundToolBPFunctionLibrary::I->SendInt.Broadcast(*InputValue);
+								UMetaSoundToolBPFunctionLibrary::Receiver->SendInt.Broadcast(*InputValue);
 							}
 						}
 					}
