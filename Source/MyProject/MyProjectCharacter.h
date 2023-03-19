@@ -99,5 +99,8 @@ public:
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
+
+	UFUNCTION(BlueprintCallable, Category = "Materials")
+		void TriggerAllMaterialPulse();
 };
 
