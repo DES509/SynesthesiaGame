@@ -2,11 +2,13 @@
 
 #include "MyProjectCharacter.h"
 #include "MyProjectProjectile.h"
+#include "AnimatedObject.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/InputSettings.h"
+#include "Kismet/GameplayStatics.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -145,4 +147,18 @@ bool AMyProjectCharacter::EnableTouchscreenMovement(class UInputComponent* Playe
 	}
 	
 	return false;
+}
+
+void AMyProjectCharacter::TriggerAllMaterialPulse() 
+{
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AActor::StaticClass(), FoundActors);
+
+	for (AActor* actor : FoundActors)
+	{
+		if (AAnimatedObject* animObject = Cast<AAnimatedObject>(actor))
+		{
+			animObject->TriggerPulse(0.5f, 1.0f);
+		}
+	}
 }
