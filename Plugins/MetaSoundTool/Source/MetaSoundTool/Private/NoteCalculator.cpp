@@ -50,11 +50,11 @@ namespace Metasound
 
 				static const FVertexInterface Interface(
 					FInputVertexInterface(
-						TInputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(NoteDegreeName)),
-						TInputDataVertexModel<FString>(METASOUND_GET_PARAM_NAME_AND_TT(NoteName))
+						TInputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(NoteDegreeName)),
+						TInputDataVertex<FString>(METASOUND_GET_PARAM_NAME_AND_TT(NoteName))
 					),
 					FOutputVertexInterface(
-						TOutputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(NoteNumberName))
+						TOutputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(NoteNumberName))
 					)
 				);
 
