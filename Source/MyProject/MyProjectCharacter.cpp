@@ -165,7 +165,7 @@ void AMyProjectCharacter::StoreALlAnimatedObjects()
 	}
 }
 
-void AMyProjectCharacter::TriggerMaterialPulse(bool isActive, EType desiredObjectType)
+void AMyProjectCharacter::TriggerMaterialPulse(bool isActive, EType desiredObjectType, float minDuration, float maxDuration)
 {
 	for (AAnimatedObject* animObject : AllAnimatedObjects)
 	{
