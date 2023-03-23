@@ -5,14 +5,14 @@
 // custom log category
 DEFINE_LOG_CATEGORY(Sandbox);
 
-AMTReceiver* UMetaSoundToolBPFunctionLibrary::I;
+AMTReceiver* UMetaSoundToolBPFunctionLibrary::Receiver;
 
 AMTReceiver::AMTReceiver()
 {
     PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
 	PrimaryActorTick.bAllowTickOnDedicatedServer = true;
-    UMetaSoundToolBPFunctionLibrary::I = this;
+    UMetaSoundToolBPFunctionLibrary::Receiver = this;
     SetSpeed(30);
 }
 

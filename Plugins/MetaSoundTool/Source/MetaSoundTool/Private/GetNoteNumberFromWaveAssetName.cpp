@@ -59,10 +59,10 @@ namespace Metasound
 					FInputVertexInterface(
 						// TInputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputAValue)),
 						// TInputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputBValue)),
-                        TInputDataVertexModel<FWaveAsset>(METASOUND_GET_PARAM_NAME_AND_TT(InputWaveAssetName))
+                        TInputDataVertex<FWaveAsset>(METASOUND_GET_PARAM_NAME_AND_TT(InputWaveAssetName))
 					),
 					FOutputVertexInterface(
-						TOutputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(OutputNoteNumberName))
+						TOutputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(OutputNoteNumberName))
 					)
 				);
 

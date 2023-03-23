@@ -54,12 +54,12 @@ namespace Metasound
 
 				static const FVertexInterface Interface(
 					FInputVertexInterface(
-						TInputDataVertexModel<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputTrigger)),
-						TInputDataVertexModel<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputReset)),
-						TInputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputValue))
+						TInputDataVertex<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputTrigger)),
+						TInputDataVertex<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputReset)),
+						TInputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputValue))
 					),
 					FOutputVertexInterface(
-						TOutputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(OutputNumName))
+						TOutputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(OutputNumName))
 					)
 				);
 
