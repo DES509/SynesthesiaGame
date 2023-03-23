@@ -10,7 +10,6 @@
 #include "GameFramework/InputSettings.h"
 #include "Kismet/GameplayStatics.h"
 
-
 //////////////////////////////////////////////////////////////////////////
 // AMyProjectCharacter
 
@@ -43,7 +42,7 @@ void AMyProjectCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
-
+	StoreALlAnimatedObjects();
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -146,11 +145,13 @@ bool AMyProjectCharacter::EnableTouchscreenMovement(class UInputComponent* Playe
 
 		return true;
 	}
-	
+
 	return false;
 }
 
-void AMyProjectCharacter::TriggerAllMaterialPulse() 
+
+// capture and store all animated objects at the start of scene
+void AMyProjectCharacter::StoreALlAnimatedObjects()
 {
 	TArray<AActor*> FoundActors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AActor::StaticClass(), FoundActors);
@@ -159,7 +160,18 @@ void AMyProjectCharacter::TriggerAllMaterialPulse()
 	{
 		if (AAnimatedObject* animObject = Cast<AAnimatedObject>(actor))
 		{
-			animObject->TriggerPulse(0.5f, 1.0f);
+			AllAnimatedObjects.Add(animObject);
+		}
+	}
+}
+
+void AMyProjectCharacter::TriggerMaterialPulse(bool isActive, EType desiredObjectType)
+{
+	for (AAnimatedObject* animObject : AllAnimatedObjects)
+	{
+		if (desiredObjectType == animObject->objectType)
+		{
+			animObject->TriggerPulse(isActive, 0.5f, 1.0f);
 		}
 	}
 }
