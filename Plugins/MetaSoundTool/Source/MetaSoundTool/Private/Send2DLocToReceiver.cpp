@@ -19,44 +19,47 @@
 #include "MetasoundUObjectRegistry.h"
 
 // Required for ensuring the node is supported by all languages in engine. Must be unique per MetaSound.
-#define LOCTEXT_NAMESPACE "MetasoundStandardNodes_MetaSoundSendToReceiverNode"
+#define LOCTEXT_NAMESPACE "MetasoundStandardNodes_MetaSoundSend2DLocToReceiverNode"
 
 namespace Metasound
 {
 	// Vertex Names - define your node's inputs and outputs here
-	namespace SendToReceiverNames
+	namespace Send2DLocToReceiverNames
 	{
 		METASOUND_PARAM(InputTrigger, "Input Trigger", "Input Trigger.");
 		METASOUND_PARAM(InputReset, "Reset", "Reset.");
-		METASOUND_PARAM(InputValue, "Float", "Float Variable.");
+		METASOUND_PARAM(InputXValue, "Float", "Float Variable.");
+        METASOUND_PARAM(InputYValue, "Float", "Float Variable.");
 		METASOUND_PARAM(OutputNumName, "Null", "Null.");
 	}
 
 
 	// Operator Class - defines the way your node is described, created and executed
-	class FSendToReceiverOperator : public TExecutableOperator<FSendToReceiverOperator>
+	class FSend2DLocToReceiverOperator : public TExecutableOperator<FSend2DLocToReceiverOperator>
 	{
 		public:
 			// Constructor
-			FSendToReceiverOperator(
+			FSend2DLocToReceiverOperator(
 				const FTriggerReadRef& InAValue,
 				const FTriggerReadRef& InBValue,
-				const FFloatReadRef& InCValue)
-				: InputTrigger(InAValue), InputReset(InBValue), InputValue(InCValue)
-				, SendToReceiverOutput(FFloatWriteRef::CreateNew())
+				const FFloatReadRef& InCValue,
+                const FFloatReadRef& InDValue)
+				: InputTrigger(InAValue), InputReset(InBValue), InputXValue(InCValue), InputYValue(InDValue)
+				, Send2DLocToReceiverOutput(FFloatWriteRef::CreateNew())
 			{
 			}
 
 			// Helper function for constructing vertex interface
 			static const FVertexInterface& DeclareVertexInterface()
 			{
-				using namespace SendToReceiverNames;
+				using namespace Send2DLocToReceiverNames;
 
 				static const FVertexInterface Interface(
 					FInputVertexInterface(
 						TInputDataVertex<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputTrigger)),
 						TInputDataVertex<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputReset)),
-						TInputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputValue))
+						TInputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputXValue)),
+                        TInputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputYValue))
 					),
 					FOutputVertexInterface(
 						TOutputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(OutputNumName))
@@ -75,11 +78,11 @@ namespace Metasound
 
 					FNodeClassMetadata Metadata
 					{
-						FNodeClassName { StandardNodes::Namespace, "Send Single Float To Receiver", StandardNodes::AudioVariant }, 
+						FNodeClassName { StandardNodes::Namespace, "Send Vector2D To Receiver", StandardNodes::AudioVariant }, 
 						1, // Major Version
 						0, // Minor Version
-						METASOUND_LOCTEXT("SendToReceiverDisplayName", "Send Single Float To Receiver"),
-						METASOUND_LOCTEXT("SendToReceiverDesc", "A simple node to demonstrate how to create new MetaSound nodes in C++. Adds two floats together"),
+						METASOUND_LOCTEXT("Send2DLocToReceiverDisplayName", "Send Vector2D To Receiver"),
+						METASOUND_LOCTEXT("Send2DLocToReceiverDesc", "A simple node to Send Vector2D To Receiver"),
 						PluginAuthor,
 						PluginNodeMissingPrompt,
 						NodeInterface,
@@ -98,13 +101,14 @@ namespace Metasound
 			// Allows MetaSound graph to interact with your node's inputs
 			virtual FDataReferenceCollection GetInputs() const override
 			{
-				using namespace SendToReceiverNames;
+				using namespace Send2DLocToReceiverNames;
 
 				FDataReferenceCollection InputDataReferences;
 
 				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputTrigger), InputTrigger);
 				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputReset), InputReset);
-				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputValue), InputValue);
+				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputXValue), InputXValue);
+                InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputYValue), InputYValue);
 
 				return InputDataReferences;
 			}
@@ -112,11 +116,11 @@ namespace Metasound
 			// Allows MetaSound graph to interact with your node's outputs
 			virtual FDataReferenceCollection GetOutputs() const override
 			{
-				using namespace SendToReceiverNames;
+				using namespace Send2DLocToReceiverNames;
 
 				FDataReferenceCollection OutputDataReferences;
 
-				OutputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(OutputNumName), SendToReceiverOutput);
+				OutputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(OutputNumName), Send2DLocToReceiverOutput);
 
 				return OutputDataReferences;
 			}
@@ -124,22 +128,23 @@ namespace Metasound
 			// Used to instantiate a new runtime instance of your node
 			static TUniquePtr<IOperator> CreateOperator(const FCreateOperatorParams& InParams, FBuildErrorArray& OutErrors)
 			{
-				using namespace SendToReceiverNames;
+				using namespace Send2DLocToReceiverNames;
 
 				const Metasound::FDataReferenceCollection& InputCollection = InParams.InputDataReferences;
 				const Metasound::FInputVertexInterface& InputInterface = DeclareVertexInterface().GetInputInterface();
 
 				TDataReadReference<FTrigger> InputTrigger = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<FTrigger>(InputInterface, METASOUND_GET_PARAM_NAME(InputTrigger), InParams.OperatorSettings);
 				TDataReadReference<FTrigger> InputReset = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<FTrigger>(InputInterface, METASOUND_GET_PARAM_NAME(InputReset), InParams.OperatorSettings);
-				TDataReadReference<float> InputValue = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<float>(InputInterface, METASOUND_GET_PARAM_NAME(InputValue), InParams.OperatorSettings);
+				TDataReadReference<float> InputXValue = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<float>(InputInterface, METASOUND_GET_PARAM_NAME(InputXValue), InParams.OperatorSettings);
+                TDataReadReference<float> InputYValue = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<float>(InputInterface, METASOUND_GET_PARAM_NAME(InputYValue), InParams.OperatorSettings);
 
-				return MakeUnique<FSendToReceiverOperator>(InputTrigger, InputReset, InputValue);
+				return MakeUnique<FSend2DLocToReceiverOperator>(InputTrigger, InputReset, InputXValue, InputYValue);
 			}
 
 			// Primary node functionality
 			void Execute()
 			{
-				*SendToReceiverOutput = 1;
+				*Send2DLocToReceiverOutput = 1;
 				
 				InputTrigger->ExecuteBlock(
 					[](int32, int32) 
@@ -152,7 +157,7 @@ namespace Metasound
 							bIsGateOpen = false;
 							if(UMetaSoundToolBPFunctionLibrary::Receiver != nullptr)
 							{
-								UMetaSoundToolBPFunctionLibrary::Receiver->SendFloat.Broadcast(*InputValue);
+								UMetaSoundToolBPFunctionLibrary::Receiver->SendLoc.Broadcast(*InputXValue, *InputYValue);
 							}
 						}
 					}
@@ -174,26 +179,27 @@ namespace Metasound
 		// Inputs
 		FTriggerReadRef InputTrigger;
 		FTriggerReadRef InputReset;
-		FFloatReadRef InputValue;
+		FFloatReadRef InputXValue;
+        FFloatReadRef InputYValue;
 
 		// Outputs
-		FFloatWriteRef SendToReceiverOutput;
+		FFloatWriteRef Send2DLocToReceiverOutput;
 
 		bool bIsGateOpen = true;
 	};
 
 	// Node Class - Inheriting from FNodeFacade is recommended for nodes that have a static FVertexInterface
-	class FSendToReceiver : public FNodeFacade
+	class FSend2DLocToReceiver : public FNodeFacade
 	{
 		public:
-			FSendToReceiver(const FNodeInitData& InitData)
-				: FNodeFacade(InitData.InstanceName, InitData.InstanceID, TFacadeOperatorClass<FSendToReceiverOperator>())
+			FSend2DLocToReceiver(const FNodeInitData& InitData)
+				: FNodeFacade(InitData.InstanceName, InitData.InstanceID, TFacadeOperatorClass<FSend2DLocToReceiverOperator>())
 			{
 			}
 	};
 
 	// Register node
-	METASOUND_REGISTER_NODE(FSendToReceiver);
+	METASOUND_REGISTER_NODE(FSend2DLocToReceiver);
 }
 
 #undef LOCTEXT_NAMESPACE

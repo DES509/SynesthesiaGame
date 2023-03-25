@@ -22,7 +22,7 @@ void ADelegateTest::BindToDelegate()
 {
 	if(UMetaSoundToolBPFunctionLibrary::Receiver != nullptr)
 	{
-		UMetaSoundToolBPFunctionLibrary::Receiver->SendInt.AddDynamic(this, &ADelegateTest::PrintFloat);
+		UMetaSoundToolBPFunctionLibrary::Receiver->SendFloat.AddDynamic(this, &ADelegateTest::PrintFloat);
 	}
 }
 
