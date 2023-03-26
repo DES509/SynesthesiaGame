@@ -28,8 +28,8 @@ namespace Metasound
 	{
 		METASOUND_PARAM(InputTrigger, "Input Trigger", "Input Trigger.");
 		METASOUND_PARAM(InputReset, "Reset", "Reset.");
-		METASOUND_PARAM(InputXValue, "Float", "Float Variable.");
-        METASOUND_PARAM(InputYValue, "Float", "Float Variable.");
+		METASOUND_PARAM(InputXValue, "Loc X", "Loc X Variable.");
+        METASOUND_PARAM(InputYValue, "Loc Y", "Loc Y Variable.");
 		METASOUND_PARAM(OutputNumName, "Null", "Null.");
 	}
 
