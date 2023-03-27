@@ -75,10 +75,10 @@ namespace Metasound
 
 					FNodeClassMetadata Metadata
 					{
-						FNodeClassName { StandardNodes::Namespace, "Send Trigger To Receiver", StandardNodes::AudioVariant }, 
+						FNodeClassName { "UE", "Send Single Float To Receiver Node", "Audio" }, 
 						1, // Major Version
 						0, // Minor Version
-						METASOUND_LOCTEXT("SendToReceiverDisplayName", "Send Trigger To Receiver"),
+						METASOUND_LOCTEXT("SendToReceiverDisplayName", "Send Single Float To Receiver Node"),
 						METASOUND_LOCTEXT("SendToReceiverDesc", "A simple node to demonstrate how to create new MetaSound nodes in C++. Adds two floats together"),
 						PluginAuthor,
 						PluginNodeMissingPrompt,
@@ -150,14 +150,9 @@ namespace Metasound
 						if (bIsGateOpen)
 						{
 							bIsGateOpen = false;
-							// if(UMetaSoundVarPasser::TestObj!=nullptr)
-							// {
-							// 	UMetaSoundVarPasser::TestObj->SendInt.Broadcast(*InputValue);
-							// 	UE_LOG(LogTemp, Warning, TEXT("Broadcast"));
-							// }
 							if(UMetaSoundToolBPFunctionLibrary::Receiver != nullptr)
 							{
-								UMetaSoundToolBPFunctionLibrary::Receiver->SendInt.Broadcast(*InputValue);
+								UMetaSoundToolBPFunctionLibrary::Receiver->SendFloat.Broadcast(*InputValue);
 							}
 						}
 					}

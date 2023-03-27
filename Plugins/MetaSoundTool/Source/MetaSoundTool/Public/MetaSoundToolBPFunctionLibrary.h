@@ -17,9 +17,6 @@ class METASOUNDTOOL_API UMetaSoundToolBPFunctionLibrary : public UBlueprintFunct
 	
 	public:
 
-    UFUNCTION(BlueprintCallable, Category = "Example Nodes")
-    static void NewFunction(int32& output);
-
 	static AMTReceiver* Receiver;
 	
 	private:

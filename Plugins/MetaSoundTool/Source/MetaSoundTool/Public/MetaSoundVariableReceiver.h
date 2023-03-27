@@ -15,6 +15,7 @@ DECLARE_LOG_CATEGORY_EXTERN(Sandbox, Log, All);
 
 UDELEGATE(BlueprintAuthorityOnly)
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIntDelegate, float, ValueA);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FVector2DDelegate, float, ValueX, float, ValueY);
 
 UCLASS()
 class METASOUNDTOOL_API AMTReceiver: public AActor
@@ -25,7 +26,9 @@ public:
     AMTReceiver();
 
     UPROPERTY(BlueprintAssignable)
-    FIntDelegate SendInt;
+    FIntDelegate SendFloat;
+    UPROPERTY(BlueprintAssignable)
+    FVector2DDelegate SendLoc;
     float GetSpeed();
     void SetSpeed(float Value);
 

@@ -70,7 +70,7 @@ namespace Metasound
 
 					FNodeClassMetadata Metadata
 					{
-						FNodeClassName { StandardNodes::Namespace, "Note Calculator Node", StandardNodes::AudioVariant }, 
+						FNodeClassName { "UE", "Note Calculator Node", "Audio" }, 
 						1, // Major Version
 						0, // Minor Version
 						METASOUND_LOCTEXT("NoteCalculatorNodeDisplayName", "Note Calculator Node"),

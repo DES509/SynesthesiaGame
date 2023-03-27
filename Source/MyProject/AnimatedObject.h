@@ -7,6 +7,11 @@
 #include "Materials/Material.h"
 #include "AnimatedObject.generated.h"
 
+
+	// enum to track type of animated object
+UENUM(BlueprintType) enum class EType : uint8 { ROCK, WATER, TREE };
+
+
 UCLASS()
 class MYPROJECT_API AAnimatedObject : public AActor
 {
@@ -30,6 +35,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Material")
-		void TriggerPulse(float minDuration, float maxDuration);
+
+	// enum to track type of animated object
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Material")
+		TEnumAsByte<EType> objectType;
+	
+	// blueprint event to trigger pusle
+	// isEnabled = enabled target status of object
+	// minDuration = minimum duration of pulse in seconds
+	// maxDuration = maximum duration of pulse in seconds
+	UFUNCTION(BlueprintImplementableEvent, Category = "Animated Material")
+		void TriggerPulse(bool isEnabled, float minDuration, float maxDuration);
 };
