@@ -78,10 +78,10 @@ namespace Metasound
 
 					FNodeClassMetadata Metadata
 					{
-						FNodeClassName { StandardNodes::Namespace, "Send Vector2D To Receiver", StandardNodes::AudioVariant }, 
+						FNodeClassName { "UE", "Send Vector2D To Receiver Node", "Audio" }, 
 						1, // Major Version
 						0, // Minor Version
-						METASOUND_LOCTEXT("Send2DLocToReceiverDisplayName", "Send Vector2D To Receiver"),
+						METASOUND_LOCTEXT("Send2DLocToReceiverDisplayName", "Send Vector2D To Receiver Node"),
 						METASOUND_LOCTEXT("Send2DLocToReceiverDesc", "A simple node to Send Vector2D To Receiver"),
 						PluginAuthor,
 						PluginNodeMissingPrompt,

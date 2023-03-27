@@ -75,10 +75,10 @@ namespace Metasound
 
 					FNodeClassMetadata Metadata
 					{
-						FNodeClassName { StandardNodes::Namespace, "Send Single Float To Receiver", StandardNodes::AudioVariant }, 
+						FNodeClassName { "UE", "Send Single Float To Receiver Node", "Audio" }, 
 						1, // Major Version
 						0, // Minor Version
-						METASOUND_LOCTEXT("SendToReceiverDisplayName", "Send Single Float To Receiver"),
+						METASOUND_LOCTEXT("SendToReceiverDisplayName", "Send Single Float To Receiver Node"),
 						METASOUND_LOCTEXT("SendToReceiverDesc", "A simple node to demonstrate how to create new MetaSound nodes in C++. Adds two floats together"),
 						PluginAuthor,
 						PluginNodeMissingPrompt,

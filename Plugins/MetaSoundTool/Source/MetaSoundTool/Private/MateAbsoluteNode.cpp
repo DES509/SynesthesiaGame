@@ -65,7 +65,7 @@ namespace Metasound
 
 					FNodeClassMetadata Metadata
 					{
-						FNodeClassName { StandardNodes::Namespace, "Math Abs Node", StandardNodes::AudioVariant }, 
+						FNodeClassName { "UE", "Math Abs Node", "Audio" }, 
 						1, // Major Version
 						0, // Minor Version
 						METASOUND_LOCTEXT("MathAbsDisplayName", "Math Abs Node"),
