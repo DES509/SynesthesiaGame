@@ -15,17 +15,17 @@ public:
 	// Sets default values for this actor's properties
 	ADelegateTest();
 
-	UFUNCTION()
-	void PrintFloat(float Num);
+// 	UFUNCTION()
+// 	void PrintFloat(float Num);
 
-	void BindToDelegate();
+// 	void BindToDelegate();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+// protected:
+// 	// Called when the game starts or when spawned
+// 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+// public:	
+// 	// Called every frame
+// 	virtual void Tick(float DeltaTime) override;
 
 };

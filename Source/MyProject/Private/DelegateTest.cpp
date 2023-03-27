@@ -7,33 +7,33 @@
 ADelegateTest::ADelegateTest()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	// PrimaryActorTick.bCanEverTick = true;
 
 }
 
-// Called when the game starts or when spawned
-void ADelegateTest::BeginPlay()
-{
-	Super::BeginPlay();
-	BindToDelegate();
-}
+// // Called when the game starts or when spawned
+// void ADelegateTest::BeginPlay()
+// {
+// 	Super::BeginPlay();
+// 	BindToDelegate();
+// }
 
-void ADelegateTest::BindToDelegate()
-{
-	if(UMetaSoundToolBPFunctionLibrary::Receiver != nullptr)
-	{
-		UMetaSoundToolBPFunctionLibrary::Receiver->SendFloat.AddDynamic(this, &ADelegateTest::PrintFloat);
-	}
-}
+// void ADelegateTest::BindToDelegate()
+// {
+// 	if(UMetaSoundToolBPFunctionLibrary::Receiver != nullptr)
+// 	{
+// 		UMetaSoundToolBPFunctionLibrary::Receiver->SendFloat.AddDynamic(this, &ADelegateTest::PrintFloat);
+// 	}
+// }
 
-// Called every frame
-void ADelegateTest::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+// // Called every frame
+// void ADelegateTest::Tick(float DeltaTime)
+// {
+// 	Super::Tick(DeltaTime);
 
-}
+// }
 
-void ADelegateTest::PrintFloat(float Num)
-{
-	UE_LOG(LogTemp, Warning, TEXT("Broadcast: %f"), Num);
-}
+// void ADelegateTest::PrintFloat(float Num)
+// {
+// 	UE_LOG(LogTemp, Warning, TEXT("Broadcast: %f"), Num);
+// }

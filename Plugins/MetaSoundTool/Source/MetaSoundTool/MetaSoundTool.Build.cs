@@ -11,7 +11,7 @@ public class MetaSoundTool : ModuleRules
 		PublicIncludePaths.AddRange(
 			new string[] {
 				// ... add public include paths required here ...
-				"MetaSoundTool/Public"
+				//"MetaSoundTool/Public"
 			}
 			);
 				
@@ -19,7 +19,7 @@ public class MetaSoundTool : ModuleRules
 		PrivateIncludePaths.AddRange(
 			new string[] {
 				// ... add other private include paths required here ...
-				"MetaSoundTool/Private"
+				//"MetaSoundTool/Private"
 			}
 			);
 			
@@ -46,8 +46,8 @@ public class MetaSoundTool : ModuleRules
 			"MetasoundFrontend",
 			"MetasoundGraphCore",
 			"MetasoundStandardNodes",
-			"MetasoundEditor",
-			"UnrealEd"
+			//"MetasoundEditor",
+			//"UnrealEd"
 		});
 		
 		
