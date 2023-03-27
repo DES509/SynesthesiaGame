@@ -171,7 +171,7 @@ void AMyProjectCharacter::TriggerMaterialPulse(bool isActive, EType desiredObjec
 	{
 		if (desiredObjectType == animObject->objectType)
 		{
-			animObject->TriggerPulse(isActive, 0.5f, 1.0f);
+			animObject->TriggerPulse(isActive, minDuration, maxDuration);
 		}
 	}
 }
