@@ -2,12 +2,13 @@
 
 #include "MyProjectCharacter.h"
 #include "MyProjectProjectile.h"
+#include "AnimatedObject.h"
 #include "Animation/AnimInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/InputSettings.h"
-
+#include "Kismet/GameplayStatics.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AMyProjectCharacter
@@ -41,7 +42,7 @@ void AMyProjectCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
-
+	StoreALlAnimatedObjects();
 }
 
 //////////////////////////////////////////////////////////////////////////// Input
@@ -144,6 +145,33 @@ bool AMyProjectCharacter::EnableTouchscreenMovement(class UInputComponent* Playe
 
 		return true;
 	}
-	
+
 	return false;
+}
+
+
+// capture and store all animated objects at the start of scene
+void AMyProjectCharacter::StoreALlAnimatedObjects()
+{
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AActor::StaticClass(), FoundActors);
+
+	for (AActor* actor : FoundActors)
+	{
+		if (AAnimatedObject* animObject = Cast<AAnimatedObject>(actor))
+		{
+			AllAnimatedObjects.Add(animObject);
+		}
+	}
+}
+
+void AMyProjectCharacter::TriggerMaterialPulse(bool isActive, EType desiredObjectType, float minDuration, float maxDuration)
+{
+	for (AAnimatedObject* animObject : AllAnimatedObjects)
+	{
+		if (desiredObjectType == animObject->objectType)
+		{
+			animObject->TriggerPulse(isActive, minDuration, maxDuration);
+		}
+	}
 }
