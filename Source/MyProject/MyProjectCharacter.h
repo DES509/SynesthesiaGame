@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "AnimatedObject.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "MyProjectCharacter.generated.h"
@@ -12,6 +13,7 @@ class USceneComponent;
 class UCameraComponent;
 class UAnimMontage;
 class USoundBase;
+class AAnimatedObject;
 
 // Declaration of the delegate that will be called when the Primary Action is triggered
 // It is declared as dynamic so it can be accessed also in Blueprints
@@ -93,11 +95,22 @@ protected:
 	 */
 	bool EnableTouchscreenMovement(UInputComponent* InputComponent);
 
+
+	// capture and store all animated objects at the start of scene
+	void StoreALlAnimatedObjects();
+
 public:
 	/** Returns Mesh1P subobject **/
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Objects")
+		TArray<AAnimatedObject*> AllAnimatedObjects;
+
+	UFUNCTION(BlueprintCallable, Category = "Animated Objects")
+		void TriggerMaterialPulse(bool isActive, EType desiredObjectType, float minDuration, float maxDuration);
 };
 
