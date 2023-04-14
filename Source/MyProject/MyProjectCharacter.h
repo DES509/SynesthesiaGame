@@ -112,5 +112,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Animated Objects")
 		void TriggerMaterialPulse(bool isActive, EType desiredObjectType, float minDuration, float maxDuration);
+
+	UFUNCTION(BlueprintCallable, Category = "Animated Objects")
+		void TriggerSingleMaterialPulse(bool isActive, AAnimatedObject* TargetMaterial, float minDuration, float maxDuration);
 };
 
