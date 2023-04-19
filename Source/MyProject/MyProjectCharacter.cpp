@@ -175,3 +175,11 @@ void AMyProjectCharacter::TriggerMaterialPulse(bool isActive, EType desiredObjec
 		}
 	}
 }
+
+void AMyProjectCharacter::TriggerSingleMaterialPulse(bool isActive, AAnimatedObject* TargetMaterial, float minDuration, float maxDuration)
+{
+	if(TargetMaterial != nullptr)
+	{
+		TargetMaterial->TriggerPulse(isActive, minDuration, maxDuration);
+	}
+}
