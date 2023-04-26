@@ -25,6 +25,33 @@ void AAnimatedObject::BeginPlay()
 void AAnimatedObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	UpdateDecayRate(DeltaTime);
+}
 
+void AAnimatedObject::UpdateDecayRate(float DeltaTime) 
+{
+	curDecayDuration += DeltaTime;
+
+	if (curDecayDuration >= maxDecayDuration) 
+	{
+		// reset
+		curDecayDuration = 0;
+
+		// decay
+		if (curTriggers > 0)
+			curTriggers--;
+	}
+}
+
+void AAnimatedObject::TriggerPulse(bool isEnabled, float minDuration, float maxDuration)
+{
+	curTriggers++;
+	TriggerPulse_Event(isEnabled, minDuration, maxDuration);
+}
+
+bool AAnimatedObject::IsOnCooldown() 
+{
+	bOnCooldown = curTriggers >= maxTriggers ? true : false;
+	return bOnCooldown;
 }
 

@@ -110,6 +110,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Objects")
 		TArray<AAnimatedObject*> AllAnimatedObjects;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Objects")
+		float maxTriggerDistance = 5000;
+
+	bool bCanTriggerPulse(AAnimatedObject* object);
+
 	UFUNCTION(BlueprintCallable, Category = "Animated Objects")
 		void TriggerMaterialPulse(bool isActive, EType desiredObjectType, float minDuration, float maxDuration);
 
