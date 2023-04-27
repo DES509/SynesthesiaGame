@@ -111,7 +111,7 @@ public:
 		TArray<AAnimatedObject*> AllAnimatedObjects;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Objects")
-		float maxTriggerDistance = 5;
+		float maxTriggerDistance = 1000;
 
 	bool bCanTriggerPulse(AAnimatedObject* object);
 

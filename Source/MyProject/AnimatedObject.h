@@ -47,7 +47,7 @@ public:
 
 	// maximum triggers before object becomes inactive
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Material")
-		uint8 maxTriggers = 1;
+		uint8 maxTriggers = 5;
 
 	// current trigger count tracking
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Material")
@@ -55,7 +55,7 @@ public:
 
 	// time in seconds for 1 trigger to decay
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Material")
-		float maxDecayDuration = 20;
+		float maxDecayDuration = 2;
 
 	// is on cooldown getter
 	bool IsOnCooldown();
