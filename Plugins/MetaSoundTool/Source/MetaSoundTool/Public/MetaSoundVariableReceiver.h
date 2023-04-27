@@ -2,6 +2,7 @@
 
 #include "Core.h"
 #include "GameFramework/Actor.h"
+#include "MetasoundEnum.h"
 #include "MetaSoundVariableReceiver.generated.h"
 
 
@@ -15,7 +16,9 @@ DECLARE_LOG_CATEGORY_EXTERN(Sandbox, Log, All);
 
 UDELEGATE(BlueprintAuthorityOnly)
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIntDelegate, float, ValueA);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FVector2DDelegate, float, ValueX, float, ValueY);
+
+//Lyre = 0, Flute = 1, Drum = 2, Trumpet = 3
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FVector2DDelegate, float, ValueX, float, ValueY, int, TypeOfInstrument);
 
 UCLASS()
 class METASOUNDTOOL_API AMTReceiver: public AActor

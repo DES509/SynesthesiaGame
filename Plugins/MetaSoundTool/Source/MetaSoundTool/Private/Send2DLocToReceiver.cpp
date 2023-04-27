@@ -12,6 +12,7 @@
 #include "MetaSoundToolBPFunctionLibrary.h"
 #include "MetasoundAssetBase.h"
 #include "Kismet/GameplayStatics.h"
+#include "MetasoundEnumRegistrationMacro.h"
 #include "Subsystems/EngineSubsystem.h"
 #include "Templates/Function.h"
 #include "MetaSoundVariableReceiver.h"
@@ -23,6 +24,20 @@
 
 namespace Metasound
 {
+	enum class EInstrumentType
+	{
+		Lyre, Flute, Drum, Trumpet 
+	};
+
+	DECLARE_METASOUND_ENUM(EInstrumentType, EInstrumentType::Lyre, METASOUNDTOOL_API,
+		FEnumInstrumentType, FEnumInstrumentTypeInfo, FEnumInstrumentTypeReadRef, FEnumInstrumentTypeWriteRef);
+
+	DEFINE_METASOUND_ENUM_BEGIN(EInstrumentType, FEnumInstrumentType, "InstrumentType")
+		DEFINE_METASOUND_ENUM_ENTRY(EInstrumentType::Lyre, "LyreDescription", "Lyre", "Lyre", "Lyre as the target type"),
+		DEFINE_METASOUND_ENUM_ENTRY(EInstrumentType::Flute, "FluteDescription", "Flute", "Flute", "Flute as the target type"),
+		DEFINE_METASOUND_ENUM_ENTRY(EInstrumentType::Drum, "DrumDescription", "Drum", "Drum", "Drum as the target type"),
+		DEFINE_METASOUND_ENUM_ENTRY(EInstrumentType::Trumpet, "TrumpetDescription", "Trumpet", "Trumpet", "Trumpet as the target type"),
+	DEFINE_METASOUND_ENUM_END()
 	// Vertex Names - define your node's inputs and outputs here
 	namespace Send2DLocToReceiverNames
 	{
@@ -30,6 +45,7 @@ namespace Metasound
 		METASOUND_PARAM(InputReset, "Reset", "Reset.");
 		METASOUND_PARAM(InputXValue, "Loc X", "Loc X Variable.");
         METASOUND_PARAM(InputYValue, "Loc Y", "Loc Y Variable.");
+		METASOUND_PARAM(InputInstrumentTypeValue, "Ins Type", "Instrument Type Variable.");
 		METASOUND_PARAM(OutputNumName, "Null", "Null.");
 	}
 
@@ -43,8 +59,9 @@ namespace Metasound
 				const FTriggerReadRef& InAValue,
 				const FTriggerReadRef& InBValue,
 				const FFloatReadRef& InCValue,
-                const FFloatReadRef& InDValue)
-				: InputTrigger(InAValue), InputReset(InBValue), InputXValue(InCValue), InputYValue(InDValue)
+                const FFloatReadRef& InDValue,
+				const FEnumInstrumentTypeReadRef& InInsValue)
+				: InputTrigger(InAValue), InputReset(InBValue), InputXValue(InCValue), InputYValue(InDValue), InputInstrumentTypeValue(InInsValue)
 				, Send2DLocToReceiverOutput(FFloatWriteRef::CreateNew())
 			{
 			}
@@ -59,7 +76,8 @@ namespace Metasound
 						TInputDataVertex<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputTrigger)),
 						TInputDataVertex<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputReset)),
 						TInputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputXValue)),
-                        TInputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputYValue))
+                        TInputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputYValue)),
+						TInputDataVertex<FEnumInstrumentType>(METASOUND_GET_PARAM_NAME_AND_TT(InputInstrumentTypeValue))
 					),
 					FOutputVertexInterface(
 						TOutputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(OutputNumName))
@@ -109,6 +127,7 @@ namespace Metasound
 				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputReset), InputReset);
 				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputXValue), InputXValue);
                 InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputYValue), InputYValue);
+				InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputInstrumentTypeValue), InputInstrumentTypeValue);
 
 				return InputDataReferences;
 			}
@@ -137,8 +156,9 @@ namespace Metasound
 				TDataReadReference<FTrigger> InputReset = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<FTrigger>(InputInterface, METASOUND_GET_PARAM_NAME(InputReset), InParams.OperatorSettings);
 				TDataReadReference<float> InputXValue = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<float>(InputInterface, METASOUND_GET_PARAM_NAME(InputXValue), InParams.OperatorSettings);
                 TDataReadReference<float> InputYValue = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<float>(InputInterface, METASOUND_GET_PARAM_NAME(InputYValue), InParams.OperatorSettings);
+				TDataReadReference<FEnumInstrumentType> InputInstrumentTypeValue = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<FEnumInstrumentType>(InputInterface, METASOUND_GET_PARAM_NAME(InputInstrumentTypeValue), InParams.OperatorSettings);
 
-				return MakeUnique<FSend2DLocToReceiverOperator>(InputTrigger, InputReset, InputXValue, InputYValue);
+				return MakeUnique<FSend2DLocToReceiverOperator>(InputTrigger, InputReset, InputXValue, InputYValue, InputInstrumentTypeValue);
 			}
 
 			// Primary node functionality
@@ -157,7 +177,24 @@ namespace Metasound
 							bIsGateOpen = false;
 							if(UMetaSoundToolBPFunctionLibrary::Receiver != nullptr)
 							{
-								UMetaSoundToolBPFunctionLibrary::Receiver->SendLoc.Broadcast(*InputXValue, *InputYValue);
+								switch(*InputInstrumentTypeValue)
+								{
+									case EInstrumentType::Lyre:
+										UMetaSoundToolBPFunctionLibrary::Receiver->SendLoc.Broadcast(*InputXValue, *InputYValue, 0);
+										break;
+									case EInstrumentType::Flute:
+										UMetaSoundToolBPFunctionLibrary::Receiver->SendLoc.Broadcast(*InputXValue, *InputYValue, 1);
+										break;	
+									case EInstrumentType::Drum:
+										UMetaSoundToolBPFunctionLibrary::Receiver->SendLoc.Broadcast(*InputXValue, *InputYValue, 2);
+										break;	
+									case EInstrumentType::Trumpet:
+										UMetaSoundToolBPFunctionLibrary::Receiver->SendLoc.Broadcast(*InputXValue, *InputYValue, 3);
+										break;	
+									default:
+										break;
+								}
+
 							}
 						}
 					}
@@ -181,6 +218,8 @@ namespace Metasound
 		FTriggerReadRef InputReset;
 		FFloatReadRef InputXValue;
         FFloatReadRef InputYValue;
+		FEnumInstrumentTypeReadRef InputInstrumentTypeValue;
+		EInstrumentType InsEnum;
 
 		// Outputs
 		FFloatWriteRef Send2DLocToReceiverOutput;
