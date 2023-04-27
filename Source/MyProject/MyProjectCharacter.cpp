@@ -199,3 +199,21 @@ bool AMyProjectCharacter::bCanTriggerPulse(AAnimatedObject* object)
 
 	return true;
 }
+
+TArray<AAnimatedObject*> AMyProjectCharacter::GetAllEligibleObjectsOfType(EType desiredObjectType)
+{
+	TArray<AAnimatedObject*> EligibleObjects;
+
+	for (AAnimatedObject* object : AllAnimatedObjects)
+	{
+		if (desiredObjectType != object->objectType)
+			continue;
+
+		if (bCanTriggerPulse(object))
+		{
+			EligibleObjects.Add(object);
+		}
+	}
+
+	return EligibleObjects;
+}
