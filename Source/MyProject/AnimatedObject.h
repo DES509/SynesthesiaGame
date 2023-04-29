@@ -69,12 +69,7 @@ public:
 	// maxDuration = maximum duration of pulse in seconds
 	void TriggerPulse(bool isEnabled, float minDuration, float maxDuration);
 
-
-	// blueprint event to make visible
+	// blueprint event to trigger pusle
 	UFUNCTION(BlueprintImplementableEvent, Category = "Animated Material")
-		void MakeVisible_Event();
-
-	// blueprint event to make invvisible
-	UFUNCTION(BlueprintImplementableEvent, Category = "Animated Material")
-		void MakeInvisible_Event();
+		void TriggerPulse_Event(bool isEnabled, float minDuration, float maxDuration);
 };

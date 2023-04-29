@@ -119,7 +119,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Animated Objects")
 		TArray<AAnimatedObject*> GetAllEligibleObjectsOfType(EType desiredObjectType);
 
-	// trigger a pulse in specific object
+	// returns the nearest to player object
+	//UFUNCTION(BlueprintCallable, Category = "Animated Objects")
+		//AAnimatedObject* GetNearestObject();
+
+	UFUNCTION(BlueprintCallable, Category = "Animated Objects")
+		void TriggerMaterialPulse(bool isActive, EType desiredObjectType, float minDuration, float maxDuration);
+
 	UFUNCTION(BlueprintCallable, Category = "Animated Objects")
 		void TriggerSingleMaterialPulse(bool isActive, AAnimatedObject* TargetMaterial, float minDuration, float maxDuration);
 };

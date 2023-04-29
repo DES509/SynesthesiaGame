@@ -46,25 +46,12 @@ void AAnimatedObject::UpdateDecayRate(float DeltaTime)
 void AAnimatedObject::TriggerPulse(bool isEnabled, float minDuration, float maxDuration)
 {
 	curTriggers++;
-
-	if (curTriggers > maxTriggers) 
-	{
-		curTriggers = maxTriggers;
-		return;
-	}
-
-	MakeVisible_Event();
+	TriggerPulse_Event(isEnabled, minDuration, maxDuration);
 }
 
 bool AAnimatedObject::IsOnCooldown() 
 {
-	if (curTriggers >= maxTriggers) 
-	{
-		curTriggers = maxTriggers;
-		MakeInvisible_Event();
-		return true;
-	}
-
-	return false;
+	bOnCooldown = curTriggers >= maxTriggers ? true : false;
+	return bOnCooldown;
 }
 

@@ -165,6 +165,19 @@ void AMyProjectCharacter::StoreALlAnimatedObjects()
 	}
 }
 
+// try trigger material pulse in all animated objects of type
+void AMyProjectCharacter::TriggerMaterialPulse(bool isActive, EType desiredObjectType, float minDuration, float maxDuration)
+{
+	for (AAnimatedObject* object : AllAnimatedObjects)
+	{
+		if (desiredObjectType != object->objectType)
+			continue;
+
+		if(bCanTriggerPulse(object))
+			object->TriggerPulse(isActive, minDuration, maxDuration);
+	}
+}
+
 // try trigger material pulse in specific animated object
 void AMyProjectCharacter::TriggerSingleMaterialPulse(bool isActive, AAnimatedObject* object, float minDuration, float maxDuration)
 {
