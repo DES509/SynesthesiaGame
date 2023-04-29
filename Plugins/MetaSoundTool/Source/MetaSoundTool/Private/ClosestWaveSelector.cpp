@@ -195,7 +195,7 @@ namespace Metasound
                         *WaveAssetSample = TempWave;
                         *OutputPitchShift = TempShift;
                         OutputTrigger->TriggerFrame(StartFrame);
-                        UE_LOG(LogTemp, Warning, TEXT("Excuting!"));
+                        //UE_LOG(LogTemp, Warning, TEXT("Excuting!"));
                     });
 
 			}
