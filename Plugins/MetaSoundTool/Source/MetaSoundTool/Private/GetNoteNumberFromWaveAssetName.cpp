@@ -28,11 +28,6 @@ namespace Metasound
         METASOUND_PARAM(InputWaveAssetName, "Sample", "Sound Wave Input");
 		METASOUND_PARAM(OutputNoteNumberName, "Note Number", "Note Number");
 	}
-    namespace StandardNodes
-	{
-		const FName Namespace = "UE";
-		const FName AudioVariant = "Audio";
-	}
 
 	// Operator Class - defines the way your node is described, created and executed
 	class FGetNoteNumFromNameOperator : public TExecutableOperator<FGetNoteNumFromNameOperator>
@@ -59,10 +54,10 @@ namespace Metasound
 					FInputVertexInterface(
 						// TInputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputAValue)),
 						// TInputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputBValue)),
-                        TInputDataVertexModel<FWaveAsset>(METASOUND_GET_PARAM_NAME_AND_TT(InputWaveAssetName))
+                        TInputDataVertex<FWaveAsset>(METASOUND_GET_PARAM_NAME_AND_TT(InputWaveAssetName))
 					),
 					FOutputVertexInterface(
-						TOutputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(OutputNoteNumberName))
+						TOutputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(OutputNoteNumberName))
 					)
 				);
 
@@ -78,7 +73,7 @@ namespace Metasound
 
 					FNodeClassMetadata Metadata
 					{
-						FNodeClassName { StandardNodes::Namespace, "GetNoteNumFromName Node", StandardNodes::AudioVariant }, 
+						FNodeClassName { "UE", "GetNoteNumFromName Node", "Audio" }, 
 						1, // Major Version
 						0, // Minor Version
 						METASOUND_LOCTEXT("GetNoteNumFromNameDisplayName", "GetNoteNumFromName Node"),

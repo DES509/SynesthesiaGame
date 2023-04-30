@@ -1,21 +1,29 @@
 #include "MetaSoundVariableReceiver.h"
 #include "Kismet/GameplayStatics.h"
+#include "MetaSoundToolBPFunctionLibrary.h"
 
 // custom log category
 DEFINE_LOG_CATEGORY(Sandbox);
 
-AMTReceiver* FMetaSoundVarPasser::TestObj;
+AMTReceiver* UMetaSoundToolBPFunctionLibrary::Receiver;
 
 AMTReceiver::AMTReceiver()
 {
     PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
 	PrimaryActorTick.bAllowTickOnDedicatedServer = true;
+    UMetaSoundToolBPFunctionLibrary::Receiver = this;
+    SetSpeed(30);
 }
 
-void AMTReceiver::GetCool()
+float AMTReceiver::GetSpeed()
 {
-    UE_LOG(LogTemp, Warning, TEXT("Cool"));
+    return speed;
+}
+
+void AMTReceiver::SetSpeed(float Value)
+{
+    speed = Value;
 }
 
 void AMTReceiver::BeginPlay()
@@ -23,7 +31,6 @@ void AMTReceiver::BeginPlay()
     Super::BeginPlay();    
 
     Initialise();
-    cool = 0;
 }
 
 void AMTReceiver::Tick(float DeltaTime)
@@ -33,17 +40,5 @@ void AMTReceiver::Tick(float DeltaTime)
 
 void AMTReceiver::Initialise()
 {
-    UE_LOG(LogTemp, Warning, TEXT("BeginPlay!"));
-    TSharedRef<FMetaSoundVarPasser> InitialPasser = MakeShared<FMetaSoundVarPasser>();
-    InitialPasser->TestObj = this;
-}
 
-FMetaSoundVarPasser::FMetaSoundVarPasser()
-{
-    UE_LOG(LogTemp, Warning, TEXT("Initialise"));
-}
-
-FMetaSoundVarPasser::~FMetaSoundVarPasser()
-{
-    LOG_WARNING("Destroy");
 }
