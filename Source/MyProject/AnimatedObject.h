@@ -9,7 +9,7 @@
 
 
 	// enum to track type of animated object
-UENUM(BlueprintType) enum class EType : uint8 { ROCK, WATER, TREE };
+UENUM(BlueprintType) enum class EType : uint8 { ROCK, WATER, TREE, INSTRUMENT };
 
 
 UCLASS()

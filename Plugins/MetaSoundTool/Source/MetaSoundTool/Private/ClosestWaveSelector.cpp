@@ -25,8 +25,10 @@ namespace Metasound
 	{
 		// METASOUND_PARAM(InputAValue, "A", "Input value A.");
 		// METASOUND_PARAM(InputBValue, "B", "Input value B.");
+        METASOUND_PARAM(InputTrigger, "Input Trigger", "Input Trigger.");
         METASOUND_PARAM(InputWaveAssetArray, "WaveAssetArray", "Sound Waves Input");
         METASOUND_PARAM(InputTargetNoteNumber, "Note Number", "Note Number");
+        METASOUND_PARAM(OutputTrigger, "Output", "Output Trigger");
 		METASOUND_PARAM(OutputWaveAssetSample, "Sound Wave Output", "Sound Wave Output");
         METASOUND_PARAM(OutputPitchShiftNumber, "Pitch Shift", "Pitch Shift");
 	}
@@ -41,12 +43,16 @@ namespace Metasound
 			FClosestWaveSelectorOperator(
 				// const FFloatReadRef& InAValue,
 				// const FFloatReadRef& InBValue,
+                const FCreateOperatorParams& InParams,
+                const FTriggerReadRef& InAValue,
                 const FArrayWaveSampleReadRef& InWaveAssets,
                 const FFloatReadRef& InNoteNumber):
 				//   InputA(InAValue)
 				// , InputB(InBValue)
-                  WaveAssets(InWaveAssets)
+                  InputTrigger(InAValue)
+                , WaveAssets(InWaveAssets)
                 , TargetNote(InNoteNumber)
+                , OutputTrigger(FTriggerWriteRef::CreateNew(InParams.OperatorSettings))
                 , WaveAssetSample(FWaveAssetWriteRef::CreateNew())
                 , OutputPitchShift(FFloatWriteRef::CreateNew())
 			{
@@ -61,10 +67,12 @@ namespace Metasound
 					FInputVertexInterface(
 						// TInputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputAValue)),
 						// TInputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputBValue)),
+                        TInputDataVertex<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(InputTrigger)),
                         TInputDataVertex<WaveSampleArrayType>(METASOUND_GET_PARAM_NAME_AND_TT(InputWaveAssetArray)),
                         TInputDataVertexModel<float>(METASOUND_GET_PARAM_NAME_AND_TT(InputTargetNoteNumber))
 					),
 					FOutputVertexInterface(
+                        TOutputDataVertex<FTrigger>(METASOUND_GET_PARAM_NAME_AND_TT(OutputTrigger)),
 						TOutputDataVertex<FWaveAsset>(METASOUND_GET_PARAM_NAME_AND_TT(OutputWaveAssetSample)),
                         TOutputDataVertex<float>(METASOUND_GET_PARAM_NAME_AND_TT(OutputPitchShiftNumber))
 					)
@@ -111,6 +119,7 @@ namespace Metasound
 
 				// InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputAValue), InputA);
 				// InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputBValue), InputB);
+                InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputTrigger), InputTrigger);
                 InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputWaveAssetArray), WaveAssets);
                 InputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(InputTargetNoteNumber), TargetNote);
 
@@ -124,6 +133,7 @@ namespace Metasound
 
 				FDataReferenceCollection OutputDataReferences;
 
+                OutputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(OutputTrigger), OutputTrigger);
 				OutputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(OutputWaveAssetSample), WaveAssetSample);
                 OutputDataReferences.AddDataReadReference(METASOUND_GET_PARAM_NAME(OutputPitchShiftNumber), OutputPitchShift);
 
@@ -140,51 +150,66 @@ namespace Metasound
 
 				// TDataReadReference<float> InputA = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<float>(InputInterface, METASOUND_GET_PARAM_NAME(InputAValue), InParams.OperatorSettings);
 				// TDataReadReference<float> InputB = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<float>(InputInterface, METASOUND_GET_PARAM_NAME(InputBValue), InParams.OperatorSettings);
+                TDataReadReference<FTrigger> InputTrigger = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<FTrigger>(InputInterface, METASOUND_GET_PARAM_NAME(InputTrigger), InParams.OperatorSettings);
                 TDataReadReference<WaveSampleArrayType> WaveAssets = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<WaveSampleArrayType>(InputInterface, METASOUND_GET_PARAM_NAME(InputWaveAssetArray), InParams.OperatorSettings);
 				TDataReadReference<float> TargetNote = InputCollection.GetDataReadReferenceOrConstructWithVertexDefault<float>(InputInterface, METASOUND_GET_PARAM_NAME(InputTargetNoteNumber), InParams.OperatorSettings);
                 
-                return MakeUnique<FClosestWaveSelectorOperator>(WaveAssets, TargetNote);
+                return MakeUnique<FClosestWaveSelectorOperator>(InParams, InputTrigger ,WaveAssets, TargetNote);
 			}
 
 			// Primary node functionality
 			void Execute()
 			{
-                int ArrayLength = WaveAssets->Num();
-                TArray<FWaveAsset> TempAssets = *WaveAssets;
-                FWaveAsset TempWave;
-                float TempShift;
-                float Minimum = 100;
-                for (int i = 0; i < ArrayLength; i++)
-                {
-                    FSoundWaveProxyPtr WaveProxy = TempAssets[i].GetSoundWaveProxy();
-                    if(WaveProxy.IsValid())
-                    {
-                        FWaveAsset Wave= TempAssets[i];
-                        FString First = GetLastChars(Wave->GetFName().ToString(), 1);
-                        FString Second = GetLastChars(Wave->GetFName().ToString(), 2);
-                        float NoteDifference = *TargetNote - CovertToMIDINum(First, Second);
-                        float Abs = NoteDifference < 0? NoteDifference*-1: NoteDifference;
+                OutputTrigger->AdvanceBlock();
 
-                        if(Minimum > Abs)
+                InputTrigger->ExecuteBlock(
+					[](int32, int32) 
+					{
+					},
+					[this](int32 StartFrame, int32 EndFrame)
+					{
+                        int ArrayLength = WaveAssets->Num();
+                        TArray<FWaveAsset> TempAssets = *WaveAssets;
+                        FWaveAsset TempWave;
+                        float TempShift;
+                        float Minimum = 100;
+                        for (int i = 0; i < ArrayLength; i++)
                         {
-                            Minimum = Abs;
-                            TempShift = NoteDifference;
-                            TempWave = Wave;
+                            FSoundWaveProxyPtr WaveProxy = TempAssets[i].GetSoundWaveProxy();
+                            if(WaveProxy.IsValid())
+                            {
+                                FWaveAsset Wave= TempAssets[i];
+                                FString First = GetLastChars(Wave->GetFName().ToString(), 1);
+                                FString Second = GetLastChars(Wave->GetFName().ToString(), 2);
+                                float NoteDifference = *TargetNote - CovertToMIDINum(First, Second);
+                                float Abs = NoteDifference < 0? NoteDifference*-1: NoteDifference;
+
+                                if(Minimum > Abs)
+                                {
+                                    Minimum = Abs;
+                                    TempShift = NoteDifference;
+                                    TempWave = Wave;
+                                }
+                            }                                   
                         }
-                    }                                   
-                }
-                *WaveAssetSample = TempWave;
-                *OutputPitchShift = TempShift;
+                        *WaveAssetSample = TempWave;
+                        *OutputPitchShift = TempShift;
+                        OutputTrigger->TriggerFrame(StartFrame);
+                        //UE_LOG(LogTemp, Warning, TEXT("Excuting!"));
+                    });
+
 			}
 
 	private:
 
 		// Inputs
 		// FFloatReadRef InputA;
+        FTriggerReadRef InputTrigger;
 		FFloatReadRef TargetNote;
         FArrayWaveSampleReadRef WaveAssets;
 
 		// Outputs
+        FTriggerWriteRef OutputTrigger;
 		FFloatWriteRef OutputPitchShift;
         FWaveAssetWriteRef WaveAssetSample;
 
