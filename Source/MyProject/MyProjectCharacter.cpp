@@ -165,21 +165,55 @@ void AMyProjectCharacter::StoreALlAnimatedObjects()
 	}
 }
 
+// try trigger material pulse in all animated objects of type
 void AMyProjectCharacter::TriggerMaterialPulse(bool isActive, EType desiredObjectType, float minDuration, float maxDuration)
 {
-	for (AAnimatedObject* animObject : AllAnimatedObjects)
+	for (AAnimatedObject* object : AllAnimatedObjects)
 	{
-		if (desiredObjectType == animObject->objectType)
-		{
-			animObject->TriggerPulse(isActive, minDuration, maxDuration);
-		}
+		if (desiredObjectType != object->objectType)
+			continue;
+
+		if(bCanTriggerPulse(object))
+			object->TriggerPulse(isActive, minDuration, maxDuration);
 	}
 }
 
-void AMyProjectCharacter::TriggerSingleMaterialPulse(bool isActive, AAnimatedObject* TargetMaterial, float minDuration, float maxDuration)
+// try trigger material pulse in specific animated object
+void AMyProjectCharacter::TriggerSingleMaterialPulse(bool isActive, AAnimatedObject* object, float minDuration, float maxDuration)
 {
-	if(TargetMaterial != nullptr)
+	if (object == nullptr)
+		return;
+
+	if (bCanTriggerPulse(object))
+		object->TriggerPulse(isActive, minDuration, maxDuration);
+}
+
+// return true if object can currently be triggered to pulse
+bool AMyProjectCharacter::bCanTriggerPulse(AAnimatedObject* object)
+{
+	if (object->IsOnCooldown())
+		return false;
+
+	if (FVector::Dist(GetActorLocation(), object->GetActorLocation()) > maxTriggerDistance)
+		return false;
+
+	return true;
+}
+
+TArray<AAnimatedObject*> AMyProjectCharacter::GetAllEligibleObjectsOfType(EType desiredObjectType)
+{
+	TArray<AAnimatedObject*> EligibleObjects;
+
+	for (AAnimatedObject* object : AllAnimatedObjects)
 	{
-		TargetMaterial->TriggerPulse(isActive, minDuration, maxDuration);
+		if (desiredObjectType != object->objectType)
+			continue;
+
+		if (bCanTriggerPulse(object))
+		{
+			EligibleObjects.Add(object);
+		}
 	}
+
+	return EligibleObjects;
 }

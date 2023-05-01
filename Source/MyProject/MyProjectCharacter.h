@@ -110,6 +110,19 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Objects")
 		TArray<AAnimatedObject*> AllAnimatedObjects;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Objects")
+		float maxTriggerDistance = 1000;
+
+	bool bCanTriggerPulse(AAnimatedObject* object);
+
+	// returns array of eligible actor object references
+	UFUNCTION(BlueprintCallable, Category = "Animated Objects")
+		TArray<AAnimatedObject*> GetAllEligibleObjectsOfType(EType desiredObjectType);
+
+	// returns the nearest to player object
+	//UFUNCTION(BlueprintCallable, Category = "Animated Objects")
+		//AAnimatedObject* GetNearestObject();
+
 	UFUNCTION(BlueprintCallable, Category = "Animated Objects")
 		void TriggerMaterialPulse(bool isActive, EType desiredObjectType, float minDuration, float maxDuration);
 
