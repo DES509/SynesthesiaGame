@@ -193,13 +193,14 @@ TArray<AAnimatedObject*> AMyProjectCharacter::GetAllEligibleObjectsOfType(EType 
 
 	for (AAnimatedObject* object : AllAnimatedObjects)
 	{
+		if (object == nullptr)
+			continue;
+
 		if (desiredObjectType != object->objectType)
 			continue;
 
 		if (bCanTriggerPulse(object))
-		{
 			EligibleObjects.Add(object);
-		}
 	}
 
 	return EligibleObjects;
