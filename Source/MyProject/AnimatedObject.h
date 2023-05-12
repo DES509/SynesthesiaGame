@@ -30,8 +30,14 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// if object is on cooldown do not allow triggering another pulse
-	bool bOnCooldown = false;
+	// is on cooldown check
+	void CheckOnCooldown();
+
+	bool isVisible = false;
+
+	// current trigger count tracking
+		int curTriggers = 0;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -39,35 +45,30 @@ public:
 
 
 	// current decay time tracking
-	float curDecayDuration = 0;
+	float curCooldown = 0;
 
 	// enum to track type of animated object
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Material")
 		TEnumAsByte<EType> objectType;
 
-	// maximum triggers before object becomes inactive
+	// maximum triggers before object enters cooldown and becomes inactive
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Material")
-		uint8 maxTriggers = 5;
+		int triggersBeforeCooldown = 5;
 
-	// current trigger count tracking
+
+	// how long object is on cooldown for
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Material")
-		uint8 curTriggers = 0;
+		float cooldownDuration = 2;
 
-	// time in seconds for 1 trigger to decay
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Animated Material")
-		float maxDecayDuration = 2;
-
-	// is on cooldown getter
-	bool IsOnCooldown();
+	// if object is on cooldown do not allow triggering another pulse
+	bool bOnCooldown = false;
 
 	// update decay rate
-	void UpdateDecayRate(float DeltaTime);
+	void UpdateCooldown(float DeltaTime);
 
 	// function to trigger pusle
 	// isEnabled = enabled target status of object
-	// minDuration = minimum duration of pulse in seconds
-	// maxDuration = maximum duration of pulse in seconds
-	void TriggerPulse(bool isEnabled, float minDuration, float maxDuration);
+	void TriggerPulse(bool isEnabled);
 
 
 	// blueprint event to make visible

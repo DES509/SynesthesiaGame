@@ -121,6 +121,6 @@ public:
 
 	// trigger a pulse in specific object
 	UFUNCTION(BlueprintCallable, Category = "Animated Objects")
-		void TriggerSingleMaterialPulse(bool isActive, AAnimatedObject* TargetMaterial, float minDuration, float maxDuration);
+		void TriggerSingleMaterialPulse(bool isActive, AAnimatedObject* TargetMaterial);
 };
 

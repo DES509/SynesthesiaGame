@@ -166,19 +166,19 @@ void AMyProjectCharacter::StoreALlAnimatedObjects()
 }
 
 // try trigger material pulse in specific animated object
-void AMyProjectCharacter::TriggerSingleMaterialPulse(bool isActive, AAnimatedObject* object, float minDuration, float maxDuration)
+void AMyProjectCharacter::TriggerSingleMaterialPulse(bool isActive, AAnimatedObject* object)
 {
 	if (object == nullptr)
 		return;
 
 	if (bCanTriggerPulse(object))
-		object->TriggerPulse(isActive, minDuration, maxDuration);
+		object->TriggerPulse(isActive);
 }
 
 // return true if object can currently be triggered to pulse
 bool AMyProjectCharacter::bCanTriggerPulse(AAnimatedObject* object)
 {
-	if (object->IsOnCooldown())
+	if (object->bOnCooldown)
 		return false;
 
 	if (FVector::Dist(GetActorLocation(), object->GetActorLocation()) > maxTriggerDistance)

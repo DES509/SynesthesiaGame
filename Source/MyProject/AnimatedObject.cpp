@@ -6,7 +6,7 @@
 // Sets default values
 AAnimatedObject::AAnimatedObject()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	meshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Static Mesh Component"));
@@ -25,46 +25,48 @@ void AAnimatedObject::BeginPlay()
 void AAnimatedObject::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	UpdateDecayRate(DeltaTime);
+	UpdateCooldown(DeltaTime);
+	CheckOnCooldown();
 }
 
-void AAnimatedObject::UpdateDecayRate(float DeltaTime) 
+void AAnimatedObject::UpdateCooldown(float DeltaTime)
 {
-	curDecayDuration += DeltaTime;
+	curCooldown += DeltaTime;
 
-	if (curDecayDuration >= maxDecayDuration) 
+	if (curCooldown >= cooldownDuration)
 	{
 		// reset
-		curDecayDuration = 0;
+		curCooldown = 0;
 
 		// decay
-		if (curTriggers > 0)
-			curTriggers--;
+		if (bOnCooldown)
+			bOnCooldown = false;
 	}
 }
 
-void AAnimatedObject::TriggerPulse(bool isEnabled, float minDuration, float maxDuration)
+void AAnimatedObject::TriggerPulse(bool isEnabled)
 {
-	curTriggers++;
-
-	if (curTriggers > maxTriggers) 
-	{
-		curTriggers = maxTriggers;
+	if (bOnCooldown)
 		return;
+
+	if (isVisible == false) 
+	{
+		isVisible = true;
+		MakeVisible_Event();
 	}
 
-	MakeVisible_Event();
+	curTriggers++;
 }
 
-bool AAnimatedObject::IsOnCooldown() 
+void AAnimatedObject::CheckOnCooldown()
 {
-	if (curTriggers >= maxTriggers) 
+	if (curTriggers >= triggersBeforeCooldown)
 	{
-		curTriggers = maxTriggers;
+		curTriggers = 0;
 		MakeInvisible_Event();
-		return true;
+		curCooldown = 0;
+		bOnCooldown = true;
+		isVisible = false;
 	}
-
-	return false;
 }
 
