@@ -3,7 +3,7 @@
 
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Runtime/UMG/Public/UMG.h"
-#include "MetaSoundVariableReceiver.h"
+#include "MSReceiver.h"
 #include "MetaSoundTool.h"
 #include "MetaSoundToolBPFunctionLibrary.generated.h"
 
@@ -17,7 +17,7 @@ class METASOUNDTOOL_API UMetaSoundToolBPFunctionLibrary : public UBlueprintFunct
 	
 	public:
 
-	static AMTReceiver* Receiver;
+	static AMSReceiver* Receiver;
 	
 	private:
 };

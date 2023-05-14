@@ -3,7 +3,7 @@
 #include "Core.h"
 #include "GameFramework/Actor.h"
 #include "MetasoundEnum.h"
-#include "MetaSoundVariableReceiver.generated.h"
+#include "MSReceiver.generated.h"
 
 
 // custom log category
@@ -21,12 +21,12 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FIntDelegate, float, ValueA);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FVector2DDelegate, float, ValueX, float, ValueY, int, TypeOfInstrument);
 
 UCLASS()
-class METASOUNDTOOL_API AMTReceiver: public AActor
+class METASOUNDTOOL_API AMSReceiver: public AActor
 {
     GENERATED_BODY()
 
 public:
-    AMTReceiver();
+    AMSReceiver();
 
     UPROPERTY(BlueprintAssignable)
     FIntDelegate SendFloat;

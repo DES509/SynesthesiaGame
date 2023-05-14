@@ -14,7 +14,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Subsystems/EngineSubsystem.h"
 #include "Templates/Function.h"
-#include "MetaSoundVariableReceiver.h"
+#include "MSReceiver.h"
 #include "Sound/SoundWave.h"
 #include "MetasoundUObjectRegistry.h"
 

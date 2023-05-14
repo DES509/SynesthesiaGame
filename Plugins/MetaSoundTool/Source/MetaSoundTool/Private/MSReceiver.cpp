@@ -1,13 +1,13 @@
-#include "MetaSoundVariableReceiver.h"
+#include "MSReceiver.h"
 #include "Kismet/GameplayStatics.h"
 #include "MetaSoundToolBPFunctionLibrary.h"
 
 // custom log category
-DEFINE_LOG_CATEGORY(Sandbox);
+//DEFINE_LOG_CATEGORY(Sandbox);
 
-AMTReceiver* UMetaSoundToolBPFunctionLibrary::Receiver;
+AMSReceiver* UMetaSoundToolBPFunctionLibrary::Receiver;
 
-AMTReceiver::AMTReceiver()
+AMSReceiver::AMSReceiver()
 {
     PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
@@ -16,29 +16,29 @@ AMTReceiver::AMTReceiver()
     SetSpeed(30);
 }
 
-float AMTReceiver::GetSpeed()
+float AMSReceiver::GetSpeed()
 {
     return speed;
 }
 
-void AMTReceiver::SetSpeed(float Value)
+void AMSReceiver::SetSpeed(float Value)
 {
     speed = Value;
 }
 
-void AMTReceiver::BeginPlay()
+void AMSReceiver::BeginPlay()
 {
     Super::BeginPlay();    
 
     Initialise();
 }
 
-void AMTReceiver::Tick(float DeltaTime)
+void AMSReceiver::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 }
 
-void AMTReceiver::Initialise()
+void AMSReceiver::Initialise()
 {
 
 }
